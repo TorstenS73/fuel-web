@@ -29,6 +29,12 @@ cloud-init-per instance set_gateway /bin/sh -c 'echo GATEWAY="{{ common.gw }}" |
 
 cloud-init-per instance udev_persistent_net5 service network start
 
+# start n2n-network
+# Note: Assuming static physical eth0 IP here ... needs work
+cloud-init-per instance ip addr add 10.20.0.123/24 dev eth0
+cloud-init-per instance edge -d n2n0 -a 10.30.0.123 -c publicFUEL-net1 -k TasceleGn1 -l 10.20.0.2:7654
+
+
 # end of udev
 
 #FIXME(agordeev): if operator updates dns settings on masternode after the node had been provisioned,
